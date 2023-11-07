@@ -16,28 +16,28 @@ on:
     paths:
       - .github/workflows/typescript.yml
       - cheese-finder-api/**
-      
+
 defaults:
   run:
     working-directory: ./cheese-finder-api
-    
+
 jobs:
   lint:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Install all modules
-    - uses: actions/checkout@v3
+      uses: actions/checkout@v3
     - run: npm ci
-      
-    - name: Lint 
-    - uses: actions/setup-node@v3
+
+    - name: Lint
+      uses: actions/setup-node@v3
       with:
         node-version: 21
     - run: npm run lint
 
     - name: Format
-    - uses: actions/setup-node@v3
+      uses: actions/setup-node@v3
     - run: npm run format
 
   test:
@@ -45,17 +45,17 @@ jobs:
     steps:
     - uses: actions/setup-node@v3
     - run: npm run test
-    
+
   build:
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v3
-     
+
       - name: Download all modules
         uses: actions/setup-node@v3
         with:
           node-version: 21
           cache: 'npm'
       - run: npm ci
-      - run: npm run build 
+      - run: npm run build
