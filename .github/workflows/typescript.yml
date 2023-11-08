@@ -34,16 +34,24 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 21
+        working-directory: ./cheese-finder-api
     - run: npm run lint
 
     - name: Format
       uses: actions/setup-node@v3
+      with:
+        node-version: 21
+        working-directory: ./cheese-finder-api
     - run: npm run format
 
   test:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/setup-node@v3
+    - name: Run tests
+      uses: actions/setup-node@v3
+      with:
+        node-version: 21
+        working-directory: ./cheese-finder-api
     - run: npm run test
 
   build:
@@ -56,6 +64,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 21
+          working-directory: ./cheese-finder-api
           cache: 'npm'
       - run: npm ci
       - run: npm run build
