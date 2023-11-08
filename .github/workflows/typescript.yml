@@ -34,20 +34,16 @@ jobs:
     - run: npm run lint
       working-directory: ./cheese-finder-api
 
-    - name: Format
-      uses: actions/setup-node@v3
-      with:
-        node-version: 21
-        check-latest: true
-    - run: npm run format
-      working-directory: ./cheese-finder-api
-
   test:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Install all modules
+      run: npm ci
+      working-directory: ./cheese-finder-api
 
     - name: Run tests
       uses: actions/setup-node@v3
