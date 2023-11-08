@@ -1,6 +1,3 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI
 
 on:
@@ -17,54 +14,58 @@ on:
       - .github/workflows/typescript.yml
       - cheese-finder-api/**
 
-defaults:
-  run:
-    working-directory: cheese-finder-api
-
 jobs:
   lint:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Install all modules
-      uses: actions/checkout@v3
-    - run: npm ci
+      run: npm ci
+      working-directory: ./cheese-finder-api
 
     - name: Lint
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v2
       with:
-        node-version: 21
-        working-directory: cheese-finder-api
+        node-version: 14
     - run: npm run lint
+      working-directory: ./cheese-finder-api
 
     - name: Format
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v2
       with:
-        node-version: 21
-        working-directory: cheese-finder-api
+        node-version: 14
     - run: npm run format
+      working-directory: ./cheese-finder-api
 
   test:
     runs-on: ubuntu-latest
+
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Run tests
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v2
       with:
-        node-version: 21
-        working-directory: cheese-finder-api
+        node-version: 14
     - run: npm run test
+      working-directory: ./cheese-finder-api
 
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Download all modules
-        uses: actions/setup-node@v3
-        with:
-          node-version: 21
-          working-directory: cheese-finder-api
-          cache: 'npm'
-      - run: npm ci
-      - run: npm run build
+    - name: Download all modules
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14
+    - run: |
+        npm ci
+        npm run build
+      working-directory: ./cheese-finder-api
