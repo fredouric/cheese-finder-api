@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
+import { CheeseService } from './cheese.service';
+import { Get } from '@nestjs/common';
 
 @Controller('cheeses')
-export class CheeseController {}
+export class CheeseController {
+  constructor(private readonly cheeseService: CheeseService) {}
+
+  @Get()
+  getCheeses() {
+    return this.cheeseService.getAllCheeses();
+  }
+}
