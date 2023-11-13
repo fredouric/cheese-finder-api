@@ -13,12 +13,17 @@ export class CheeseService implements OnModuleInit {
   cheeses: Cheese[];
 
   async onModuleInit() {
-    await this.getCheesesFromAPI();
+    Promise.all([
+      this.getCheesesFromAPIWithLimit(100, 0),
+      this.getCheesesFromAPIWithLimit(100, 100),
+      this.getCheesesFromAPIWithLimit(100, 200),
+      this.getCheesesFromAPIWithLimit(100, 300),
+    ]);
   }
 
-  async getCheesesFromAPI() {
+  async getCheesesFromAPIWithLimit(limit = 100, offset = 0) {
     const cheeseObservable = this.httpService.get<ApiResponseRJS>(
-      'https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/fromagescsv-fromagescsv@public/records?limit=100',
+      `https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/fromagescsv-fromagescsv@public/records?limit=${limit}&offset=${offset}`,
     );
 
     cheeseObservable
