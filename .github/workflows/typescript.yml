@@ -4,7 +4,6 @@ on:
   push:
     paths:
       - .github/workflows/typescript.yml
-      - cheese-finder-api/**
     tags:
       - '*'
     branches:
@@ -12,60 +11,54 @@ on:
   pull_request:
     paths:
       - .github/workflows/typescript.yml
-      - cheese-finder-api/**
 
 jobs:
   lint:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install all modules
-      run: npm ci
-      working-directory: ./cheese-finder-api
+      - name: Install all modules
+        run: npm ci
 
-    - name: Lint
-      uses: actions/setup-node@v3
-      with:
-        node-version: 21
-        check-latest: true
-    - run: npm run lint
-      working-directory: ./cheese-finder-api
+      - name: Lint
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21
+          check-latest: true
+      - run: npm run lint
 
   test:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install all modules
-      run: npm ci
-      working-directory: ./cheese-finder-api
+      - name: Install all modules
+        run: npm ci
 
-    - name: Run tests
-      uses: actions/setup-node@v3
-      with:
-        node-version: 21
-        check-latest: true
-    - run: npm run test
-      working-directory: ./cheese-finder-api
+      - name: Run tests
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21
+          check-latest: true
+      - run: npm run test
 
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Download all modules
-      uses: actions/setup-node@v3
-      with:
-        node-version: 21
-        check-latest: true
-    - run: |
-        npm ci
-        npm run build
-      working-directory: ./cheese-finder-api
+      - name: Download all modules
+        uses: actions/setup-node@v3
+        with:
+          node-version: 21
+          check-latest: true
+      - run: |
+          npm ci
+          npm run build
