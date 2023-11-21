@@ -1,5 +1,10 @@
 import { HttpService } from '@nestjs/axios';
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  InternalServerErrorException,
+  OnModuleInit,
+} from '@nestjs/common';
 import { Cheese } from './interfaces/cheese.interface';
 import { ApiResponseRJS } from './dto/cheese.rjs';
 import { map } from 'rxjs';
@@ -13,6 +18,7 @@ export class CheeseService implements OnModuleInit {
   cheeses: Cheese[];
 
   async onModuleInit() {
+    // API has 338 entries
     Promise.all([
       this.getCheesesFromAPIWithLimit(100, 0),
       this.getCheesesFromAPIWithLimit(100, 100),
@@ -53,7 +59,57 @@ export class CheeseService implements OnModuleInit {
   }
 
   addCheese(cheese: Cheese): Cheese {
-    this.cheeses.push(cheese);
-    return cheese;
+    if (!this.isValidCheese(cheese)) {
+      throw new BadRequestException('Invalid cheese data');
+    }
+
+    const duplicate = this.cheeses.find(
+      (duplicate) =>
+        duplicate.fromage === cheese.fromage &&
+        duplicate.departement == cheese.departement,
+    );
+    if (duplicate === undefined) {
+      this.cheeses.push(cheese);
+      return cheese;
+    } else {
+      throw new InternalServerErrorException('Cheese already exists.');
+    }
+  }
+
+  getCheeseWithNameAndDepartement(
+    fromage: string,
+    departement: string,
+  ): Cheese[] {
+    return this.cheeses.filter(
+      (cheese) =>
+        cheese.fromage.toUpperCase() === fromage.toUpperCase() &&
+        cheese.departement.toUpperCase() === departement.toUpperCase(),
+    );
+  }
+
+  searchCheese(fromage: string): Cheese[] {
+    return this.cheeses.filter((cheese) =>
+      cheese.fromage.toUpperCase().includes(fromage.toUpperCase()),
+    );
+  }
+
+  isValidCheese(cheese: Cheese): boolean {
+    if (
+      cheese &&
+      typeof cheese.departement === 'string' &&
+      cheese.departement.trim() !== '' &&
+      typeof cheese.fromage === 'string' &&
+      cheese.fromage.trim() !== '' &&
+      Array.isArray(cheese.lait) &&
+      cheese.lait.every(
+        (type) => typeof type === 'string' && type.trim() !== '',
+      ) &&
+      cheese.geo_point_2d &&
+      typeof cheese.geo_point_2d.lon === 'number' &&
+      typeof cheese.geo_point_2d.lat === 'number'
+    ) {
+      return true;
+    }
+    return false;
   }
 }
