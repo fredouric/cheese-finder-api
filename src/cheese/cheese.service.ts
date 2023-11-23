@@ -65,8 +65,8 @@ export class CheeseService implements OnModuleInit {
 
     const duplicate = this.cheeses.find(
       (duplicate) =>
-        duplicate.fromage === cheese.fromage &&
-        duplicate.departement == cheese.departement,
+        duplicate.fromage.toUpperCase() === cheese.fromage.toUpperCase() &&
+        duplicate.departement.toUpperCase() == cheese.departement.toUpperCase(),
     );
     if (duplicate === undefined) {
       this.cheeses.push(cheese);
