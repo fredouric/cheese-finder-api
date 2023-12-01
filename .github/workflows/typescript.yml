@@ -57,4 +57,4 @@ jobs:
           check-latest: true
       - run: |
           npm ci
-          npm run build
+          npm run install
