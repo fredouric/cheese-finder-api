@@ -1,0 +1,11 @@
+{
+    "apps": [
+        {
+            "app_id": "app_6cc3a92e-88fe-44a0-8db4-3ae4ac45cbdd",
+            "deploy_url": "git+ssh://git@push-n3-par-clevercloud-customers.services.clever-cloud.com/app_6cc3a92e-88fe-44a0-8db4-3ae4ac45cbdd.git",
+            "name": "Cheese-EPG-FTS",
+            "alias": "Cheese-EPG-FTS",
+            "org_id": "orga_693c81f4-6d20-46f3-901b-29afc84a379d"
+        }
+    ]
+}
