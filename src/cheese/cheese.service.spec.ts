@@ -33,6 +33,18 @@ describe('CheeseService', () => {
         departement: 'A',
         fromage: 'Brie',
         lait: ['cow'],
+        geo_shape: {
+          geometry: {
+            coordinates: [
+              [
+                [1, 2],
+                [3, 4],
+                [5, 6],
+                [1, 2],
+              ],
+            ],
+          },
+        },
         geo_point_2d: { lon: 1, lat: 2 },
       };
 
@@ -45,6 +57,18 @@ describe('CheeseService', () => {
         departement: 'A',
         fromage: '', // Invalid: empty string
         lait: ['cow'],
+        geo_shape: {
+          geometry: {
+            coordinates: [
+              [
+                [1, 2],
+                [3, 4],
+                [5, 6],
+                [1, 2],
+              ],
+            ],
+          },
+        },
         geo_point_2d: { lon: 1, lat: 2 },
       };
 
@@ -58,6 +82,18 @@ describe('CheeseService', () => {
         departement: 'A',
         fromage: 'Brie',
         lait: ['cow'],
+        geo_shape: {
+          geometry: {
+            coordinates: [
+              [
+                [1, 2],
+                [3, 4],
+                [5, 6],
+                [1, 2],
+              ],
+            ],
+          },
+        },
         geo_point_2d: { lon: 1, lat: 2 },
       };
 

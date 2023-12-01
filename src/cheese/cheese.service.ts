@@ -37,11 +37,16 @@ export class CheeseService implements OnModuleInit {
         map((response) => response.data.results),
         map((cheeses) =>
           cheeses
-            .filter((cheese) => cheese.geo_point_2d)
+            .filter((cheese) => cheese.geo_shape && cheese.geo_point_2d)
             .map((cheese) => ({
               departement: cheese.departement,
               fromage: cheese.fromage,
               lait: cheese.lait,
+              geo_shape: {
+                geometry: {
+                  coordinates: cheese.geo_shape.geometry.coordinates,
+                },
+              },
               geo_point_2d: {
                 lon: cheese.geo_point_2d.lon,
                 lat: cheese.geo_point_2d.lat,
