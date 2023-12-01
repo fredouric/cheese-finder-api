@@ -65,6 +65,9 @@ jobs:
     needs: [lint, test, build]
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Deploy to Clever Cloud
         uses: 47ng/actions-clever-cloud@v1.3.1
         with:
