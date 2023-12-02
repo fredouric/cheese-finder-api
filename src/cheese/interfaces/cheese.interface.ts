@@ -1,4 +1,5 @@
 export interface Cheese {
+  id: string;
   departement: string;
   fromage: string;
   lait: string[];
@@ -11,4 +12,5 @@ export interface Cheese {
     lon: number;
     lat: number;
   };
+  favorite: boolean;
 }

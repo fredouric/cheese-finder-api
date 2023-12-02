@@ -7,6 +7,7 @@ import {
   InternalServerErrorException,
 } from '@nestjs/common';
 import { CheeseService } from './cheese.service';
+import { v4 as uuidv4 } from 'uuid';
 
 describe('CheeseService', () => {
   let service: CheeseService;
@@ -30,6 +31,7 @@ describe('CheeseService', () => {
   describe('addCheese', () => {
     it('should add a valid cheese', () => {
       const validCheese = {
+        id: uuidv4(),
         departement: 'A',
         fromage: 'Brie',
         lait: ['cow'],
@@ -46,6 +48,7 @@ describe('CheeseService', () => {
           },
         },
         geo_point_2d: { lon: 1, lat: 2 },
+        favorite: false,
       };
 
       expect(() => service.addCheese(validCheese)).not.toThrow();
@@ -54,6 +57,7 @@ describe('CheeseService', () => {
 
     it('should throw BadRequestException for invalid cheese', () => {
       const invalidCheese = {
+        id: uuidv4(),
         departement: 'A',
         fromage: '', // Invalid: empty string
         lait: ['cow'],
@@ -70,6 +74,7 @@ describe('CheeseService', () => {
           },
         },
         geo_point_2d: { lon: 1, lat: 2 },
+        favorite: false,
       };
 
       expect(() => service.addCheese(invalidCheese)).toThrow(
@@ -79,6 +84,7 @@ describe('CheeseService', () => {
 
     it('should throw InternalServerErrorException for duplicate cheese', () => {
       const duplicateCheese = {
+        id: uuidv4(),
         departement: 'A',
         fromage: 'Brie',
         lait: ['cow'],
@@ -95,6 +101,7 @@ describe('CheeseService', () => {
           },
         },
         geo_point_2d: { lon: 1, lat: 2 },
+        favorite: false,
       };
 
       // Adding the first cheese

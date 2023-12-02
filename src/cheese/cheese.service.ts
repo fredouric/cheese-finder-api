@@ -8,6 +8,8 @@ import {
 import { Cheese } from './interfaces/cheese.interface';
 import { ApiResponseRJS } from './dto/cheese.rjs';
 import { map } from 'rxjs';
+import { v4 as uuidv4, validate as uuidValidate } from 'uuid';
+import 'uuid';
 
 @Injectable()
 export class CheeseService implements OnModuleInit {
@@ -39,6 +41,7 @@ export class CheeseService implements OnModuleInit {
           cheeses
             .filter((cheese) => cheese.geo_shape && cheese.geo_point_2d)
             .map((cheese) => ({
+              id: uuidv4(),
               departement: cheese.departement,
               fromage: cheese.fromage,
               lait: cheese.lait,
@@ -51,6 +54,7 @@ export class CheeseService implements OnModuleInit {
                 lon: cheese.geo_point_2d.lon,
                 lat: cheese.geo_point_2d.lat,
               },
+              favorite: false,
             })),
         ),
       )
@@ -81,15 +85,8 @@ export class CheeseService implements OnModuleInit {
     }
   }
 
-  getCheeseWithNameAndDepartement(
-    fromage: string,
-    departement: string,
-  ): Cheese[] {
-    return this.cheeses.filter(
-      (cheese) =>
-        cheese.fromage.toUpperCase() === fromage.toUpperCase() &&
-        cheese.departement.toUpperCase() === departement.toUpperCase(),
-    );
+  getCheeseWithUUID(uuid: string): Cheese[] {
+    return this.cheeses.filter((cheese) => cheese.id === uuid);
   }
 
   searchCheese(fromage: string): Cheese[] {
@@ -98,9 +95,24 @@ export class CheeseService implements OnModuleInit {
     );
   }
 
+  toggleFavorite(uuid: string): Cheese {
+    const cheeseIndex = this.cheeses.findIndex(
+      (cheese) => cheese.id.toUpperCase() === uuid.toUpperCase(),
+    );
+
+    if (cheeseIndex !== -1) {
+      this.cheeses[cheeseIndex].favorite = !this.cheeses[cheeseIndex].favorite;
+      return this.cheeses[cheeseIndex];
+    } else {
+      throw new BadRequestException('Cheese does not exist', uuid);
+    }
+  }
+
   isValidCheese(cheese: Cheese): boolean {
     if (
       cheese &&
+      typeof cheese.id === 'string' &&
+      uuidValidate(cheese.id) &&
       typeof cheese.departement === 'string' &&
       cheese.departement.trim() !== '' &&
       typeof cheese.fromage === 'string' &&
