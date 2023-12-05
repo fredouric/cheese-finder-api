@@ -36,6 +36,7 @@ describe('CheeseService', () => {
         fromage: 'Brie',
         lait: ['cow'],
         geo_shape: {
+          type: 'a',
           geometry: {
             coordinates: [
               [
@@ -45,7 +46,9 @@ describe('CheeseService', () => {
                 [1, 2],
               ],
             ],
+            type: 'b',
           },
+          properties: { key: 'value' },
         },
         geo_point_2d: { lon: 1, lat: 2 },
         favorite: false,
@@ -59,9 +62,10 @@ describe('CheeseService', () => {
       const invalidCheese = {
         id: uuidv4(),
         departement: 'A',
-        fromage: '', // Invalid: empty string
+        fromage: '',
         lait: ['cow'],
         geo_shape: {
+          type: 'a',
           geometry: {
             coordinates: [
               [
@@ -71,7 +75,9 @@ describe('CheeseService', () => {
                 [1, 2],
               ],
             ],
+            type: 'b',
           },
+          properties: { key: 'value' },
         },
         geo_point_2d: { lon: 1, lat: 2 },
         favorite: false,
@@ -89,6 +95,7 @@ describe('CheeseService', () => {
         fromage: 'Brie',
         lait: ['cow'],
         geo_shape: {
+          type: 'a',
           geometry: {
             coordinates: [
               [
@@ -98,7 +105,9 @@ describe('CheeseService', () => {
                 [1, 2],
               ],
             ],
+            type: 'b',
           },
+          properties: { key: 'value' },
         },
         geo_point_2d: { lon: 1, lat: 2 },
         favorite: false,

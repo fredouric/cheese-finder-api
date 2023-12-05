@@ -45,11 +45,7 @@ export class CheeseService implements OnModuleInit {
               departement: cheese.departement,
               fromage: cheese.fromage,
               lait: cheese.lait,
-              geo_shape: {
-                geometry: {
-                  coordinates: cheese.geo_shape.geometry.coordinates,
-                },
-              },
+              geo_shape: cheese.geo_shape,
               geo_point_2d: {
                 lon: cheese.geo_point_2d.lon,
                 lat: cheese.geo_point_2d.lat,
