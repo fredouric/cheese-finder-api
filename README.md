@@ -63,4 +63,7 @@ Since the "image" field in the original API is empty for most entries, we decide
 - **Request Body**: JSON object with the property `id` representing the UUID of the cheese to toggle.
 - **Description**: Toggle the favorite status of a cheese.
 
+## Cheese Finder App
+
+[Cheese Finder App](https://github.com/fredouric/cheese-finder-app)
 
